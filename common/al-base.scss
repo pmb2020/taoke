@@ -1,0 +1,82 @@
+/**
+ * alone系列基础css
+ */
+
+/* 阴影 */
+$al-box-shadow:0px 12px 32px 4px rgba(0, 0, 0, .04), 0px 8px 20px rgba(0, 0, 0, .08);
+$al-box-shadow-light:0px 0px 12px rgba(0, 0, 0, .12);
+$al-box-shadow-lighter: 0px 0px 6px rgba(0, 0, 0, .12);
+$al-box-shadow-dark: 0px 16px 48px 16px rgba(0, 0, 0, .08), 0px 12px 32px rgba(0, 0, 0, .12), 0px 8px 16px -8px rgba(0, 0, 0, .16);
+
+.al-flex{
+	display: flex;
+	align-items: center;
+}
+.al-flex-between{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.al-card{
+	background-color: #fff;
+	padding: 30rpx;
+	border-radius: 20rpx;
+	box-shadow: $al-box-shadow;
+	margin-bottom: 30rpx;
+	.top{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 20rpx;
+		.left{
+			font-weight: bolder;
+			font-size: 32rpx;
+		}
+		.right{
+			color: #666;
+			font-size: 28rpx;
+		}
+	}
+}
+
+.al-box{
+	border-radius: 8px;
+	overflow: hidden;
+	background-color: #fff;
+	box-shadow: $al-box-shadow;
+}
+
+.al-tag{
+	display: inline-block;
+	padding: 5px 10px;
+	background-color: #ebebeb;
+	color: #fff;
+	border-radius: 15px;
+	margin-right: 15px;
+}
+
+.al-box-title{
+	.title{
+		color: #333;
+		font-weight: 700;
+		font-size: 30rpx;
+		margin-bottom: 10rpx;
+	}
+	.body{
+		padding: 20rpx;
+		background-color: #fff;
+		border-radius: 4px;
+	}
+}
+.txt-line-1{
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.txt-line-2{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
