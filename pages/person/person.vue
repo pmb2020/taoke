@@ -84,6 +84,7 @@ import _default from 'vuex';
 	const userInfo = ref({})
 	onShow(()=>{
 		userInfo.value = uni.getStorageSync('userInfo') || {}
+		console.log(userInfo.value)
 	})
 	const testfun = ()=>{
 		uni.showToast({
@@ -108,16 +109,7 @@ import _default from 'vuex';
 		console.log(index)
 		switch(index){
 			case 1 :
-				if(!userInfo.value.phone){
-					uni.showToast({
-						title:'请您先登录！',
-						icon:'none'
-					})
-				}else{
-					uni.navigateTo({
-						url:'/pages/auth/auth'
-					})
-				}
+				toTbAuth()
 				break
 			case 7 :
 				logoutFun()
@@ -130,6 +122,24 @@ import _default from 'vuex';
 				}
 		}
 		
+	}
+	//淘宝授权
+	const toTbAuth = () =>{
+		if(!userInfo.value.phone){
+			uni.showToast({
+				title:'请您先登录！',
+				icon:'none'
+			})
+		}else if(userInfo.value.taobao_is_auth){
+			uni.showToast({
+				title:'您已经授权过啦！',
+				icon:'none'
+			})
+		}else{
+			uni.navigateTo({
+				url:'/pages/auth/auth'
+			})
+		}
 	}
 	//注销登录
 	const logoutFun = () =>{

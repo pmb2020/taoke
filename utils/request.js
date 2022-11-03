@@ -26,6 +26,10 @@ export const myRequest = (url,params={},method='GET')=>{
 					resolve(res.data.data)
 				}else if(res.data.code==10001){
 					uni.removeStorageSync('userInfo')
+					uni.showToast({
+						title:'登录已过期，请重新登录',
+						icon:'none'
+					})
 				}else{
 					uni.showToast({
 						title:res.data.msg || 'http状态码：'+res.statusCode,
