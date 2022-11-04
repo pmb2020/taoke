@@ -40,6 +40,7 @@
 		phone: '17739028084',
 		password: '123456'
 	})
+	const isLock = ref(false)
 	const loginSubmit = (e) => {
 		if(!loginFrom.value.phone || !loginFrom.value.password){
 			uni.showToast({
@@ -47,21 +48,28 @@
 				icon:'none'
 			})
 		}
-		login(loginFrom.value).then(res => {
-			setToken(res.token)
-			getUserInfo().then(res=>{
-				uni.setStorageSync('userInfo',res)
-				uni.showToast({
-					title:'欢迎您！',
-					icon:'success'
-				})
-				setTimeout(()=>{
-					uni.switchTab({
-						url: '/pages/person/person'
+		if(!isLock.value){
+			isLock.value = true
+			login(loginFrom.value).then(res => {
+				setToken(res.token)
+				getUserInfo().then(res=>{
+					uni.setStorageSync('userInfo',res)
+					uni.showToast({
+						title:'欢迎您！',
+						icon:'success'
 					})
-				},1500)
+					setTimeout(()=>{
+						uni.switchTab({
+							url: '/pages/person/person'
+						})
+					},1500)
+				})
 			})
-		})
+			setTimeout(()=>{
+				isLock.value = false
+			},3000)
+		}
+		
 	}
 </script>
 
