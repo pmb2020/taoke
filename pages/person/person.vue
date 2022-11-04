@@ -63,8 +63,7 @@
 	import {ref,reactive} from 'vue'
 	import {onLoad,onShow,onPageScroll} from '@dcloudio/uni-app'
 	import {getUserInfo,logout} from '@/apis/user.js'
-    import { getStorage, getStorageSync } from '@dcloudio/uni-h5';
-import _default from 'vuex';
+
 	const orderNav = reactive([
 		{name:'我的收益',icon:'icon-tixian',link:''},
 		{name:'我的收藏',icon:'icon-shoucangshangpin',link:''},
