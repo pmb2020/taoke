@@ -3,9 +3,9 @@
 		<view class="person-top">
 			<view class="al-flex">
 				<image class="avatar" src="@/static/images/avatar-default.png" mode="widthFix"></image>
-				<view v-if="userInfo.phone" class="info">
-					<view class="name">{{userInfo.nickname || '用户'+userInfo.phone}}</view>
-					<view class="code">邀请码：{{userInfo.phone}}</view>
+				<view v-if="userStore.isLogin" class="info">
+					<view class="name">{{userInfo.nickname || '未知昵称'}}</view>
+					<view class="code">邀请码：453482</view>
 				</view>
 				<navigator v-else style="margin-left: 15px;" url="/pages/login/login">请先登录</navigator>
 			</view>
@@ -63,7 +63,10 @@
 	import {ref,reactive} from 'vue'
 	import {onLoad,onShow,onPageScroll} from '@dcloudio/uni-app'
 	import {getUserInfo,logout} from '@/apis/user.js'
-
+	import {useUserStore} from '@/stores/user.js'
+	const userStore = useUserStore()
+	const userInfo = ref(userStore.userInfo)
+	
 	const orderNav = reactive([
 		{name:'我的收益',icon:'icon-tixian',link:''},
 		{name:'我的收藏',icon:'icon-shoucangshangpin',link:''},
@@ -80,11 +83,11 @@
 		{name:'意见反馈',icon:'icon-tuandui',link:''},
 		{name:'注销',icon:'icon-tuichu',link:''},
 	])
-	const userInfo = ref({})
+	
 	onShow(()=>{
-		userInfo.value = uni.getStorageSync('userInfo') || {}
-		console.log(userInfo.value)
+		// console.log(userInfo.value)
 	})
+	
 	const testfun = ()=>{
 		uni.showToast({
 			title:'点击了测试'
@@ -96,7 +99,6 @@
 	const scrollTop = ref(0)
 	const change = (e)=>{
 		let {index} =e.detail
-		console.log(index)
 		if(orderNav[index].link){
 			uni.navigateTo({
 				url:orderNav[index].link
@@ -105,7 +107,6 @@
 	}
 	const moreChange = (e)=>{
 		let {index} =e.detail
-		console.log(index)
 		switch(index){
 			case 1 :
 				toTbAuth()
@@ -122,6 +123,7 @@
 		}
 		
 	}
+	
 	//淘宝授权
 	const toTbAuth = () =>{
 		if(!userInfo.value.phone){
@@ -142,10 +144,9 @@
 	}
 	//注销登录
 	const logoutFun = () =>{
-		if(userInfo.value.phone){
+		if(userInfo.value.id){
 			logout().then(res=>{
-				userInfo.value={}
-				uni.removeStorageSync('userInfo')
+				userStore.logOut()
 				uni.showToast({
 					title:'注销成功',
 					icon:'none'

@@ -8,7 +8,7 @@
 			<form @submit="loginSubmit">
 				<view class="al-form-item">
 					<uni-icons type="person" size="25"></uni-icons>
-					<input class="input" required v-model="loginFrom.phone" placeholder="账号" maxlength="15" />
+					<input class="input" required v-model="loginFrom.username" placeholder="账号" maxlength="15" />
 				</view>
 				<view class="al-form-item">
 					<uni-icons type="locked" size="25"></uni-icons>
@@ -28,41 +28,35 @@
 	import {
 		ref
 	} from 'vue'
-	import {
-		login,
-		getUserInfo
-	} from '@/apis/user.js'
+	import {login} from '@/apis/user.js'
 	import {
 		setToken,
 		getToken
 	} from '@/utils/auth.js'
+	import {useUserStore} from '@/stores/user'
+	const userStore = useUserStore()
 	const loginFrom = ref({
-		phone: '17739028084',
+		username: '17739028084',
 		password: '123456'
 	})
 	const isLock = ref(false)
 	const loginSubmit = (e) => {
-		if(!loginFrom.value.phone || !loginFrom.value.password){
+		if(!loginFrom.value.username || !loginFrom.value.password){
 			uni.showToast({
 				title:'账号或密码不能为空',
 				icon:'none'
 			})
 		}
 		if(!isLock.value){
+			uni.showLoading({
+				title:'加载中...'
+			})
 			isLock.value = true
 			login(loginFrom.value).then(res => {
-				setToken(res.token)
-				getUserInfo().then(res=>{
-					uni.setStorageSync('userInfo',res)
-					uni.showToast({
-						title:'欢迎您！',
-						icon:'success'
-					})
-					setTimeout(()=>{
-						uni.switchTab({
-							url: '/pages/person/person'
-						})
-					},1500)
+				uni.hideLoading()
+				userStore.login(res.userInfo,res.token)
+				uni.switchTab({
+					url: '/pages/person/person'
 				})
 			})
 			setTimeout(()=>{
