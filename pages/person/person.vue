@@ -126,7 +126,7 @@
 	
 	//淘宝授权
 	const toTbAuth = () =>{
-		if(!userInfo.value.phone){
+		if(!userStore.isLogin){
 			uni.showToast({
 				title:'请您先登录！',
 				icon:'none'
@@ -144,7 +144,7 @@
 	}
 	//注销登录
 	const logoutFun = () =>{
-		if(userInfo.value.id){
+		if(userStore.isLogin){
 			logout().then(res=>{
 				userStore.logOut()
 				uni.showToast({

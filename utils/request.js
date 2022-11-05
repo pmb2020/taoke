@@ -1,4 +1,5 @@
 import { getToken } from "./auth"
+import {useUserStore} from '@/stores/user'
 
 const baseUrl = import.meta.env.VITE_BASE_URL
 
@@ -25,7 +26,8 @@ export const myRequest = (url,params={},method='GET')=>{
 				if(res.data.code==0){
 					resolve(res.data.data)
 				}else if(res.data.code==10001){
-					uni.removeStorageSync('userInfo')
+					const userStore = useUserStore()
+					userStore.logOut()
 					uni.showToast({
 						title:'登录已过期，请重新登录',
 						icon:'none'
