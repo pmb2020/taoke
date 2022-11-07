@@ -1,5 +1,6 @@
 <template>
 	<view class="goodsList">
+		<goods-list-two :data="goodsByCategory.data" />
 		<al-goods-list :data="goodsByCategory.data" clickUrl="/pages/show/show" :reflectKey="reflectKey"></al-goods-list>
 	</view>
 </template>
